@@ -35,8 +35,8 @@ namespace ToyParser.Tests
         }
 
         [Theory]
-        [InlineData("""123""")]
-        [InlineData("""1""")]
+        [InlineData("\"123\"")]
+        [InlineData("\"1\"")]
         public void GetNextToken_ReturnsStringLiteralToken(string value)
         {
             //Arrange
@@ -128,6 +128,51 @@ namespace ToyParser.Tests
             //Assert
             Assert.Equal(value, token.Value);
             Assert.Equal(tokenType, token.Type);
+        }
+
+        [Theory]
+        [InlineData(" ")]
+        [InlineData("\t\t")]
+        [InlineData("\n\n\n\n")]
+        public void GetNextToken_ReturnsWhiteSpaceToken(string value)
+        {
+            //Arrange
+            ILexer tokenizer = new Lexer.Lexer(value.AsMemory(), []);
+            //Act
+            var token = tokenizer.GetNextToken();
+            //Assert
+            Assert.Equal(value, token.Value);
+            Assert.Equal(TokenType.WHITE_SPACE, token.Type);
+        }
+
+        [Theory]
+        [InlineData("//1233")]
+        [InlineData("//\"dsadsa\"")]
+        [InlineData("//   ")]
+        public void GetNextToken_SingleLineCommentToken(string value)
+        {
+            //Arrange
+            ILexer tokenizer = new Lexer.Lexer(value.AsMemory(), []);
+            //Act
+            var token = tokenizer.GetNextToken();
+            //Assert
+            Assert.Equal(value, token.Value);
+            Assert.Equal(TokenType.COMMENT_SINGLE_LINE, token.Type);
+        }
+
+        [Theory]
+        [InlineData("/* \" dsada\"*/")]
+        [InlineData("/* \n 123 \n \t*/")]
+        [InlineData("/* \t\t\t \n\n \t*/")]
+        public void GetNextToken_MultiLineCommentToken(string value)
+        {
+            //Arrange
+            ILexer tokenizer = new Lexer.Lexer(value.AsMemory(), []);
+            //Act
+            var token = tokenizer.GetNextToken();
+            //Assert
+            Assert.Equal(value, token.Value);
+            Assert.Equal(TokenType.COMMENT_MULTI_LINE, token.Type);
         }
     }
 }
