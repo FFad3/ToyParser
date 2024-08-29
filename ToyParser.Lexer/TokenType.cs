@@ -4,6 +4,15 @@
     {
         EOF,
         ILLEGAL,
+
+        WHITE_SPACE,
+        COMMENT_SINGLE_LINE,
+        COMMENT_MULTI_LINE,
+
+        TRUE,
+        FALSE,
+        RETURN,
+
         IDNETIFIER,
         DIGIT,
         STRING_LITERAL,
@@ -13,6 +22,7 @@
         MINUS,
         MULTIPLY,
         DIVIDE,
+
         EQUALS,
         NOT_EQUALS,
         LESS_THAN,
@@ -27,13 +37,7 @@
 
         L_PAREN,
         R_PAREN,
-
         L_BRACE,
         R_BRACE,
-
-        TRUE,
-        FALSE,
-
-        RETURN,
     }
 }
