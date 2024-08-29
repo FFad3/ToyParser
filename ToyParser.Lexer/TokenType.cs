@@ -6,17 +6,19 @@
         ILLEGAL,
         IDNETIFIER,
         DIGIT,
+        STRING_LITERAL,
 
         ASSIGN,
         PLUS,
         MINUS,
         MULTIPLY,
         DIVIDE,
-
         EQUALS,
         NOT_EQUALS,
         LESS_THAN,
         GREATER_THAN,
+        LESS_THAN_OR_EQUALS,
+        GREATER_THAN_OR_EQUALS,
 
         SEMICOLON,
         COMMA,
