@@ -10,7 +10,7 @@
 
         public override string ToString()
         {
-            return $"{Type,-3} {Position} {Value}";
+            return $"T:{Type,-3} {Position} V:{Value}";
         }
     }
 }

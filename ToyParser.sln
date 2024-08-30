@@ -3,17 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyParser.Parser", "ToyParser\ToyParser.Parser.csproj", "{F6D9C3E9-E168-41C6-9374-AFC4632E5E47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToyParser.Parser", "ToyParser\ToyParser.Parser.csproj", "{F6D9C3E9-E168-41C6-9374-AFC4632E5E47}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{434ACE39-520D-4D34-832A-95A7E1115CE7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{EA843AE4-E552-4098-9E62-709D2566C3BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyParser.Lexer", "ToyParser.Lexer\ToyParser.Lexer.csproj", "{827E900E-9BB1-43B1-BB98-27C7F6DA7FC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToyParser.Lexer", "ToyParser.Lexer\ToyParser.Lexer.csproj", "{827E900E-9BB1-43B1-BB98-27C7F6DA7FC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyParser.Tests", "ToyParser.Tests\ToyParser.Tests.csproj", "{08CA62E8-FE34-40A2-90C7-BD39F6AC8788}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToyParser.Tests", "ToyParser.Tests\ToyParser.Tests.csproj", "{08CA62E8-FE34-40A2-90C7-BD39F6AC8788}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyParser.Utils", "ToyParser.Utils\ToyParser.Utils.csproj", "{F58FF6DB-335F-4836-A2EA-9FF2539E1284}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToyParser.Utils", "ToyParser.Utils\ToyParser.Utils.csproj", "{F58FF6DB-335F-4836-A2EA-9FF2539E1284}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{35A26735-617F-429A-A07C-C76FB4325D76}"
+	ProjectSection(SolutionItems) = preProject
+		Sample1.txt = Sample1.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

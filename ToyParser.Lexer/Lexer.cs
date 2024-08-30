@@ -54,11 +54,10 @@ namespace ToyParser.Lexer
                 {RegexPaterns.R_ParenRegex, TokenType.R_PAREN },
                 {RegexPaterns.L_BraceRegex, TokenType.L_BRACE },
                 {RegexPaterns.R_BraceRegex, TokenType.R_BRACE },
-
             };
         }
 
-        public Lexer(ReadOnlyMemory<char> content, TokenType[] ignoredTokens)
+        public Lexer(ReadOnlyMemory<char> content, params TokenType[] ignoredTokens)
         {
             this._position = 0;
             this._content = content;
@@ -91,11 +90,12 @@ namespace ToyParser.Lexer
         public Token GetNextToken()
         {
             Token token = GetToken();
+            this._position += token.Position.Length;
+
             if (_ignoredTokens.Contains(token.Type))
             {
-                token = GetToken();
+                token = GetNextToken();
             }
-            this._position += token.Position.Length;
             return token;
         }
     }
