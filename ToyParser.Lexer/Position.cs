@@ -8,7 +8,7 @@
 
         public override string ToString()
         {
-            return $"POSITION: [{Start},{End}] LENGHT: {Length}";
+            return $"START: {Start,-3} END: {End,-3} LEN:{Length,2}";
         }
     }
 }

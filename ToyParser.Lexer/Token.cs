@@ -7,5 +7,10 @@
         public TokenType Type { get; } = type;
         public Position Position { get; } = position;
         public string Value => _readOnlyMemory.ToString();
+
+        public override string ToString()
+        {
+            return $"{Type,-3} {Position} {Value}";
+        }
     }
 }
