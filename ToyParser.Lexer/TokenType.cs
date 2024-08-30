@@ -11,6 +11,9 @@
 
         TRUE,
         FALSE,
+        IF,
+        ELSE,
+        FOR,
         RETURN,
 
         IDNETIFIER,

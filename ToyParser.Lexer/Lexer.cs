@@ -22,6 +22,9 @@ namespace ToyParser.Lexer
 
                 {RegexPaterns.BooleanTrueRegex, TokenType.TRUE },
                 {RegexPaterns.BooleanFalseRegex, TokenType.FALSE },
+                {RegexPaterns.IfKeywordRegex, TokenType.IF },
+                {RegexPaterns.ElseKeywordRegex, TokenType.ELSE },
+                {RegexPaterns.ForKeywordRegex, TokenType.FOR },
                 {RegexPaterns.ReturnRegex, TokenType.RETURN },
 
                 {RegexPaterns.IdentifierRegex, TokenType.IDNETIFIER },

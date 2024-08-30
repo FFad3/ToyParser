@@ -118,6 +118,9 @@ namespace ToyParser.Tests
         [Theory]
         [InlineData("tRue", TokenType.TRUE)]
         [InlineData("false", TokenType.FALSE)]
+        [InlineData("if", TokenType.IF)]
+        [InlineData("else", TokenType.ELSE)]
+        [InlineData("for", TokenType.FOR)]
         [InlineData("return", TokenType.RETURN)]
         public void GetNextToken_ReturnsKeywordToken(string value, TokenType tokenType)
         {

@@ -10,6 +10,9 @@ namespace ToyParser.Lexer
 
         public static readonly Regex BooleanTrueRegex = new(@"(?i)^true", RegexOptions.Compiled);
         public static readonly Regex BooleanFalseRegex = new(@"(?i)^false", RegexOptions.Compiled);
+        public static readonly Regex IfKeywordRegex = new(@"(?i)^if", RegexOptions.Compiled);
+        public static readonly Regex ElseKeywordRegex = new(@"(?i)^else", RegexOptions.Compiled);
+        public static readonly Regex ForKeywordRegex = new(@"(?i)^for", RegexOptions.Compiled);
         public static readonly Regex ReturnRegex = new(@"(?i)^return", RegexOptions.Compiled);
 
         public static readonly Regex IdentifierRegex = new(@"^[a-zA-Z_]+[a-zA0-9_]*", RegexOptions.Compiled);
