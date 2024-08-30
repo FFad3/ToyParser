@@ -7,4 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ToyParser.Lexer\ToyParser.Lexer.csproj" />
+  </ItemGroup>
+
 </Project>
