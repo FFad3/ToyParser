@@ -3,16 +3,20 @@ using ToyParser.Utils;
 
 namespace ToyParser.Lexer
 {
-    public class Lexer : ILexer
+    public sealed class CustomLexer : ILexer
     {
-        private readonly ReadOnlyMemory<char> _content;
-        private readonly TokenType[] _ignoredTokens;
-        private static readonly Dictionary<Regex, TokenType> _tokenTypeToRegex;
+        private static readonly ILexer _instance = new CustomLexer();
+
+        private ReadOnlyMemory<char> _content = ReadOnlyMemory<char>.Empty;
+        private TokenType[] _ignoredTokens = [];
         private int _position;
+
         private bool _isEOF => this._position >= this._content.Length;
         private ReadOnlyMemory<char> _currentSlice => this._content[this._position..];
 
-        static Lexer()
+        private static readonly Dictionary<Regex, TokenType> _tokenTypeToRegex;
+
+        static CustomLexer()
         {
             _tokenTypeToRegex = new()
             {
@@ -57,12 +61,8 @@ namespace ToyParser.Lexer
             };
         }
 
-        public Lexer(ReadOnlyMemory<char> content, params TokenType[] ignoredTokens)
-        {
-            this._position = 0;
-            this._content = content;
-            this._ignoredTokens = ignoredTokens;
-        }
+        private CustomLexer()
+        { }
 
         public Token GetToken()
         {
@@ -98,5 +98,18 @@ namespace ToyParser.Lexer
             }
             return token;
         }
+
+        public void SetContent(ReadOnlyMemory<char> content)
+        {
+            this._position = 0;
+            this._content = content;
+        }
+
+        public void SetIgnoredTokens(params TokenType[] tokenTypes)
+        {
+            this._ignoredTokens = tokenTypes;
+        }
+
+        public static ILexer Instance => _instance;
     }
 }

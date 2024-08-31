@@ -1,5 +1,8 @@
-﻿using System.Text;
+﻿using System.Diagnostics.Metrics;
+using System.Text;
 using ToyParser.Lexer;
+using ToyParser.Parser;
+using ToyParser.Parser.Visitor;
 using ToyParser.Utils;
 
 namespace ToyParser
@@ -8,12 +11,35 @@ namespace ToyParser
     {
         private static void Main(string[] args)
         {
-            var directory = Directory.GetCurrentDirectory();
-            var fileInfos = GetFileInfos(directory, 20);
+            FileInfo[] files = Directory.GetFiles(Environment.CurrentDirectory, "*.txt").Select(x => new FileInfo(x)).ToArray();
+            DisplayFilesSummary(files);
 
-            //Get specific file content
-            var content = ReadFromFileInfo(fileInfos.ToArray()[0]);
-            ILexer lexer = new Lexer.Lexer(content.AsMemory(), TokenType.WHITE_SPACE, TokenType.COMMENT_MULTI_LINE, TokenType.WHITE_SPACE);
+            ILexer lexer = CustomLexer.Instance;
+            lexer.SetIgnoredTokens(TokenType.WHITE_SPACE, TokenType.COMMENT_MULTI_LINE, TokenType.COMMENT_SINGLE_LINE);
+
+            var parser = new CustomParser(lexer);
+            IASTVisitor visitor = new ASTVisitor();
+            foreach (var file in files)
+            {
+                var tokens = GetTokenList(file);
+                DisplayTokenTable(tokens);
+
+                var ASTroot = parser.Parse(file);
+                visitor.Visit(ASTroot);
+            }
+        }
+
+        private static IEnumerable<Token> GetTokenList(FileInfo file)
+        {
+            ReadOnlyMemory<char> content;
+            using (StreamReader reader = file.OpenText())
+            {
+                content = reader.ReadToEnd().AsMemory();
+            }
+
+            ILexer lexer = CustomLexer.Instance;
+            lexer.SetIgnoredTokens(TokenType.WHITE_SPACE, TokenType.COMMENT_MULTI_LINE, TokenType.COMMENT_SINGLE_LINE);
+            lexer.SetContent(content);
             List<Token> tokens = new List<Token>();
             Token token;
             do
@@ -21,7 +47,7 @@ namespace ToyParser
                 token = lexer.GetNextToken();
                 tokens.Add(token);
             } while (token.Type != TokenType.EOF);
-            DisplayTokenTable(tokens);
+            return tokens;
         }
 
         private static void DisplayTokenTable(IEnumerable<Token> tokens)
@@ -51,39 +77,27 @@ namespace ToyParser
             Console.WriteLine(sb);
         }
 
-        private static string ReadFromFileInfo(FileInfo fileInfo)
+        private static void DisplayFilesSummary(FileInfo[] filesInfos)
         {
-            string content;
-            using (StreamReader reader = fileInfo.OpenText())
-            {
-                content = reader.ReadToEnd();
-            }
-            return content;
-        }
-
-        private static void PrintFilesSummmary(FileInfo[] files, int spacing)
-        {
+            const int spacing = 20;
             var sb = new StringBuilder();
+
             sb.AppendLine(new string('-', 8 + (spacing * 2)));
-            sb.AppendLine($"{"Number".PadRight(8)}{"FileName".PadRight(spacing)}{"FileSize".PadRight(spacing)}");
+            sb.Append($"{"Number".PadRight(8)}");
+            sb.Append($"{"FileName".PadRight(spacing)}");
+            sb.Append($"{"FileSize".PadRight(spacing)}");
+            sb.AppendLine();
             sb.AppendLine(new string('-', 8 + (spacing * 2)));
-            for (int i = 0; i < files.Length; i++)
+
+            for (int i = 0; i < filesInfos.Length; i++)
             {
-                var fileName = files[i].Name;
-                var fileSize = FileSizeExtension.FormatFileSizeAsString(files[i].Length);
-                sb.AppendLine($"{i.ToString().PadRight(8)}{fileName.PadRight(spacing)}{fileSize.PadRight(spacing)}");
+                FileInfo fileInfo = filesInfos[i];
+                sb.Append($"{i.ToString().PadRight(8)}");
+                sb.Append($"{fileInfo.Name.PadRight(spacing)}");
+                sb.Append($"{FileSizeExtension.FormatFileSizeAsString(fileInfo.Length).PadRight(spacing)}");
+                sb.AppendLine();
             }
             Console.WriteLine(sb);
-        }
-
-        private static IEnumerable<FileInfo> GetFileInfos(string directory, int spacing)
-        {
-            string solutionDirectory = Directory.GetParent(directory)!.Parent!.Parent!.Parent!.FullName;
-            var files = Directory.GetFiles(solutionDirectory, "*.txt").Select(f => new FileInfo(f)).ToArray();
-
-            PrintFilesSummmary(files, spacing);
-
-            return files;
         }
     }
 }

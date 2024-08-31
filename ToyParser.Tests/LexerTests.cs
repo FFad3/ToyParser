@@ -12,7 +12,7 @@ namespace ToyParser.Tests
         public void GetNextToken_ReturnsIdentifierToken(string value)
         {
             //Arrange
-            ILexer tokenizer = new Lexer.Lexer(value.AsMemory(), []);
+            ILexer tokenizer = new Lexer.CustomLexer(value.AsMemory(), []);
             //Act
             var token = tokenizer.GetNextToken();
             //Assert
@@ -26,7 +26,7 @@ namespace ToyParser.Tests
         public void GetNextToken_ReturnsNumberToken(string value)
         {
             //Arrange
-            ILexer tokenizer = new Lexer.Lexer(value.AsMemory(), []);
+            ILexer tokenizer = new Lexer.CustomLexer(value.AsMemory(), []);
             //Act
             var token = tokenizer.GetNextToken();
             //Assert
@@ -40,7 +40,7 @@ namespace ToyParser.Tests
         public void GetNextToken_ReturnsStringLiteralToken(string value)
         {
             //Arrange
-            ILexer tokenizer = new Lexer.Lexer(value.AsMemory(), []);
+            ILexer tokenizer = new Lexer.CustomLexer(value.AsMemory(), []);
             //Act
             var token = tokenizer.GetNextToken();
             //Assert
@@ -54,7 +54,7 @@ namespace ToyParser.Tests
         public void GetNextToken_ReturnsParenToken(string value, TokenType tokenType)
         {
             //Arrange
-            ILexer tokenizer = new Lexer.Lexer(value.AsMemory(), []);
+            ILexer tokenizer = new Lexer.CustomLexer(value.AsMemory(), []);
             //Act
             var token = tokenizer.GetNextToken();
             //Assert
@@ -68,7 +68,7 @@ namespace ToyParser.Tests
         public void GetNextToken_ReturnsBraceToken(string value, TokenType tokenType)
         {
             //Arrange
-            ILexer tokenizer = new Lexer.Lexer(value.AsMemory(), []);
+            ILexer tokenizer = new Lexer.CustomLexer(value.AsMemory(), []);
             //Act
             var token = tokenizer.GetNextToken();
             //Assert
@@ -91,7 +91,7 @@ namespace ToyParser.Tests
         public void GetNextToken_ReturnsOperatorToken(string value, TokenType tokenType)
         {
             //Arrange
-            ILexer tokenizer = new Lexer.Lexer(value.AsMemory(), []);
+            ILexer tokenizer = new Lexer.CustomLexer(value.AsMemory(), []);
             //Act
             var token = tokenizer.GetNextToken();
             //Assert
@@ -107,7 +107,7 @@ namespace ToyParser.Tests
         public void GetNextToken_ReturnsPunctuationToken(string value, TokenType tokenType)
         {
             //Arrange
-            ILexer tokenizer = new Lexer.Lexer(value.AsMemory(), []);
+            ILexer tokenizer = new Lexer.CustomLexer(value.AsMemory(), []);
             //Act
             var token = tokenizer.GetNextToken();
             //Assert
@@ -125,7 +125,7 @@ namespace ToyParser.Tests
         public void GetNextToken_ReturnsKeywordToken(string value, TokenType tokenType)
         {
             //Arrange
-            ILexer tokenizer = new Lexer.Lexer(value.AsMemory(), []);
+            ILexer tokenizer = new Lexer.CustomLexer(value.AsMemory(), []);
             //Act
             var token = tokenizer.GetNextToken();
             //Assert
@@ -140,7 +140,7 @@ namespace ToyParser.Tests
         public void GetNextToken_ReturnsWhiteSpaceToken(string value)
         {
             //Arrange
-            ILexer tokenizer = new Lexer.Lexer(value.AsMemory(), []);
+            ILexer tokenizer = new Lexer.CustomLexer(value.AsMemory(), []);
             //Act
             var token = tokenizer.GetNextToken();
             //Assert
@@ -155,7 +155,7 @@ namespace ToyParser.Tests
         public void GetNextToken_SingleLineCommentToken(string value)
         {
             //Arrange
-            ILexer tokenizer = new Lexer.Lexer(value.AsMemory(), []);
+            ILexer tokenizer = new Lexer.CustomLexer(value.AsMemory(), []);
             //Act
             var token = tokenizer.GetNextToken();
             //Assert
@@ -170,7 +170,7 @@ namespace ToyParser.Tests
         public void GetNextToken_MultiLineCommentToken(string value)
         {
             //Arrange
-            ILexer tokenizer = new Lexer.Lexer(value.AsMemory(), []);
+            ILexer tokenizer = new Lexer.CustomLexer(value.AsMemory(), []);
             //Act
             var token = tokenizer.GetNextToken();
             //Assert

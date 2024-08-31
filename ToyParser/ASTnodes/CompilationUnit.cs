@@ -1,4 +1,6 @@
-﻿namespace ToyParser.Parser.ASTnodes
+﻿using ToyParser.Parser.Visitor;
+
+namespace ToyParser.Parser.ASTnodes
 {
     public sealed class CompilationUnit(List<ASTNode> nodes) : ASTNode
     {
@@ -7,5 +9,10 @@
         public override IEnumerable<ASTNode> GetChildren() => _nodes;
 
         public override string GetValue() => string.Empty;
+
+        public override void Accept(IASTVisitor visitor, bool IsLast)
+        {
+            visitor.Visit(this);
+        }
     }
 }

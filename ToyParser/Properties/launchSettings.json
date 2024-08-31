@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ToyParser.Parser": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\gneba\\source\\repos\\ToyParser"
+    }
+  }
+}
