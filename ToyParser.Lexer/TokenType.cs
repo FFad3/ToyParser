@@ -9,6 +9,10 @@
         COMMENT_SINGLE_LINE,
         COMMENT_MULTI_LINE,
 
+        INT,
+        STRING,
+        BOOLEAN,
+
         TRUE,
         FALSE,
         IF,
@@ -16,7 +20,7 @@
         FOR,
         RETURN,
 
-        IDNETIFIER,
+        IDENTIFIER,
         DIGIT,
         STRING_LITERAL,
 
@@ -42,5 +46,7 @@
         R_PAREN,
         L_BRACE,
         R_BRACE,
+        L_BRACKET,
+        R_BRACKET,
     }
 }

@@ -24,6 +24,10 @@ namespace ToyParser.Lexer
                 {RegexPaterns.SingleLineCommentRegex, TokenType.COMMENT_SINGLE_LINE },
                 {RegexPaterns.MultiLineCommentRegex, TokenType.COMMENT_MULTI_LINE },
 
+                {RegexPaterns.BooleanTypeRegex, TokenType.BOOLEAN },
+                {RegexPaterns.IntTypeRegex, TokenType.INT },
+                {RegexPaterns.StringTypeRegex, TokenType.STRING },
+                
                 {RegexPaterns.BooleanTrueRegex, TokenType.TRUE },
                 {RegexPaterns.BooleanFalseRegex, TokenType.FALSE },
                 {RegexPaterns.IfKeywordRegex, TokenType.IF },
@@ -31,7 +35,7 @@ namespace ToyParser.Lexer
                 {RegexPaterns.ForKeywordRegex, TokenType.FOR },
                 {RegexPaterns.ReturnRegex, TokenType.RETURN },
 
-                {RegexPaterns.IdentifierRegex, TokenType.IDNETIFIER },
+                {RegexPaterns.IdentifierRegex, TokenType.IDENTIFIER },
                 {RegexPaterns.DigitRegex, TokenType.DIGIT },
                 {RegexPaterns.StringLiteralRegex, TokenType.STRING_LITERAL },
 
@@ -58,6 +62,8 @@ namespace ToyParser.Lexer
                 {RegexPaterns.R_ParenRegex, TokenType.R_PAREN },
                 {RegexPaterns.L_BraceRegex, TokenType.L_BRACE },
                 {RegexPaterns.R_BraceRegex, TokenType.R_BRACE },
+                {RegexPaterns.L_BracketRegex, TokenType.L_BRACKET },
+                {RegexPaterns.R_BracketRegex, TokenType.R_BRACKET },
             };
         }
 

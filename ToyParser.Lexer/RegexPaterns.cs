@@ -8,6 +8,10 @@ namespace ToyParser.Lexer
         public static readonly Regex SingleLineCommentRegex = new(@"^//.*", RegexOptions.Compiled);
         public static readonly Regex MultiLineCommentRegex = new(@"^/\*[\s\S]*?\*/", RegexOptions.Compiled);
 
+        public static readonly Regex BooleanTypeRegex = new(@"(?i)^bool", RegexOptions.Compiled);
+        public static readonly Regex IntTypeRegex = new(@"(?i)^int", RegexOptions.Compiled);
+        public static readonly Regex StringTypeRegex = new(@"(?i)^string", RegexOptions.Compiled);
+
         public static readonly Regex BooleanTrueRegex = new(@"(?i)^true", RegexOptions.Compiled);
         public static readonly Regex BooleanFalseRegex = new(@"(?i)^false", RegexOptions.Compiled);
         public static readonly Regex IfKeywordRegex = new(@"(?i)^if", RegexOptions.Compiled);
@@ -42,5 +46,7 @@ namespace ToyParser.Lexer
         public static readonly Regex R_ParenRegex = new(@"^\)", RegexOptions.Compiled);
         public static readonly Regex L_BraceRegex = new(@"^{", RegexOptions.Compiled);
         public static readonly Regex R_BraceRegex = new(@"^}", RegexOptions.Compiled);
+        public static readonly Regex L_BracketRegex = new(@"^\[", RegexOptions.Compiled);
+        public static readonly Regex R_BracketRegex = new(@"^\]", RegexOptions.Compiled);
     }
 }
