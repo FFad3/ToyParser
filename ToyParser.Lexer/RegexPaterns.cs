@@ -8,6 +8,7 @@ namespace ToyParser.Lexer
         public static readonly Regex SingleLineCommentRegex = new(@"^//.*", RegexOptions.Compiled);
         public static readonly Regex MultiLineCommentRegex = new(@"^/\*[\s\S]*?\*/", RegexOptions.Compiled);
 
+        public static readonly Regex ClassTypeRegex = new(@"(?i)^class", RegexOptions.Compiled);
         public static readonly Regex BooleanTypeRegex = new(@"(?i)^bool", RegexOptions.Compiled);
         public static readonly Regex IntTypeRegex = new(@"(?i)^int", RegexOptions.Compiled);
         public static readonly Regex StringTypeRegex = new(@"(?i)^string", RegexOptions.Compiled);

@@ -24,6 +24,7 @@ namespace ToyParser.Lexer
                 {RegexPaterns.SingleLineCommentRegex, TokenType.COMMENT_SINGLE_LINE },
                 {RegexPaterns.MultiLineCommentRegex, TokenType.COMMENT_MULTI_LINE },
 
+                {RegexPaterns.ClassTypeRegex, TokenType.CLASS },
                 {RegexPaterns.BooleanTypeRegex, TokenType.BOOLEAN },
                 {RegexPaterns.IntTypeRegex, TokenType.INT },
                 {RegexPaterns.StringTypeRegex, TokenType.STRING },

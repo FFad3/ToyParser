@@ -9,6 +9,7 @@
         COMMENT_SINGLE_LINE,
         COMMENT_MULTI_LINE,
 
+        CLASS,
         INT,
         STRING,
         BOOLEAN,

@@ -47,6 +47,21 @@ namespace ToyParser.Parser
             return node;
         }
 
+        private ClassDeclaration ParseClassDeclaration()
+        {
+            Eat(TokenType.CLASS);
+            var identifier = ParseIdentifier();
+            Eat(TokenType.L_BRACE);
+            List<ASTNode> nodes = new List<ASTNode>();
+            while (_currentToken.Type != TokenType.R_BRACE)
+            {
+                nodes.Add(ParseStatement());
+            }
+            Eat(TokenType.R_BRACE);
+
+            return new ClassDeclaration(identifier, nodes);
+        }
+
         private ASTNode ParseStatement()
         {
             return _currentToken.Type switch
@@ -55,6 +70,7 @@ namespace ToyParser.Parser
                 TokenType.STRING => ParseVariableOrMethodDeclaration(ParseStringType()),
                 TokenType.BOOLEAN => ParseVariableOrMethodDeclaration(ParseBooleanType()),
                 TokenType.IDENTIFIER => ParseAssigmentOrMethodCall(),
+                TokenType.CLASS => ParseClassDeclaration(),
                 _ => throw new SyntaxErrorException($"Unexpected token {_currentToken}")
             };
         }
@@ -122,11 +138,9 @@ namespace ToyParser.Parser
 
             while (_currentToken.Type != TokenType.SEMICOLON)
             {
+                Eat(TokenType.COMMA);
                 var variableDeclarator = ParseVariableDeclarator();
                 variableDeclarators.Add(variableDeclarator);
-
-                if (_currentToken.Type == TokenType.COMMA)
-                    Eat(TokenType.COMMA);
             }
             Eat(TokenType.SEMICOLON);
             return new VariableDeclaration(variableType, variableDeclarators);
