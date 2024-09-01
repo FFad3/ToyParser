@@ -4,7 +4,7 @@ namespace ToyParser.Parser.ASTnodes
 {
     public sealed class BlockStatement(IEnumerable<ASTNode> statements, ReturnStatement returnStatement) : ASTNode
     {
-        private readonly List<ASTNode> _statements = statements.ToList();
+        private readonly IEnumerable<ASTNode> _statements = statements;
         public ReturnStatement ReturnStatement { get; } = returnStatement;
 
         public override void Accept(IASTVisitor visitor, bool isLast)

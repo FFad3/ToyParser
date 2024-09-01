@@ -2,14 +2,12 @@
 
 namespace ToyParser.Parser.ASTnodes
 {
-    public sealed class MethodDeclaration(VariableType Type, Identifier Identifier, IEnumerable<MethodParameter> Parameters, BlockStatement BlockStatement) : ASTNode
+    public sealed class MethodDeclaration(VariableType type, Identifier identifier, IEnumerable<MethodParameter> parameters, BlockStatement blockStatement) : ASTNode
     {
-        public VariableType ReturnType { get; } = Type;
-        public Identifier Identifier { get; } = Identifier;
-        private readonly List<MethodParameter> _parameters = Parameters.ToList();
-        public BlockStatement BlockStatement { get; } = BlockStatement;
-
-        public void AddParameter(MethodParameter parameter) => _parameters.Add(parameter);
+        public VariableType ReturnType { get; } = type;
+        public Identifier Identifier { get; } = identifier;
+        private readonly IEnumerable<MethodParameter> _parameters = parameters;
+        public BlockStatement BlockStatement { get; } = blockStatement;
 
         public override void Accept(IASTVisitor visitor, bool isLast)
         {

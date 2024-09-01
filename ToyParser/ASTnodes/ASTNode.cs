@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using ToyParser.Parser.Visitor;
+﻿using ToyParser.Parser.Visitor;
 
 namespace ToyParser.Parser.ASTnodes
 {
