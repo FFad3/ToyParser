@@ -54,31 +54,52 @@ namespace ToyParser.Parser
                 TokenType.INT => ParseVariableOrMethodDeclaration(ParseIntType()),
                 TokenType.STRING => ParseVariableOrMethodDeclaration(ParseStringType()),
                 TokenType.BOOLEAN => ParseVariableOrMethodDeclaration(ParseBooleanType()),
-                TokenType.RETURN => ParseReturnStatement(),
+                TokenType.IDENTIFIER => ParseAssigmentOrMethodCall(),
                 _ => throw new SyntaxErrorException($"Unexpected token {_currentToken}")
             };
         }
 
-        private VariableDeclarator ParseVariableDeclarator(bool isArray)
+        private ASTNode ParseAssigmentOrMethodCall()
+        {
+            Identifier identifier = ParseIdentifier();
+            ASTNode result;
+            switch (_currentToken.Type)
+            {
+                case TokenType.ASSIGN:
+                    result = ParseVariableDeclarator(identifier);
+                    break;
+
+                case TokenType.L_PAREN:
+                    result = ParseMethodCall(identifier);
+                    break;
+
+                default:
+                    throw new SyntaxErrorException($"Unexpected token {_currentToken}");
+            }
+            Eat(TokenType.SEMICOLON);
+            return result;
+        }
+
+        private VariableDeclarator ParseVariableDeclarator()
         {
             var identifier = ParseIdentifier();
-            var equalsValueClause = ParseEqualsValueClause(isArray);
+            return ParseVariableDeclarator(identifier);
+        }
+
+        private VariableDeclarator ParseVariableDeclarator(Identifier identifier)
+        {
+            var equalsValueClause = ParseEqualsValueClause();
             return new VariableDeclarator(identifier, equalsValueClause);
         }
 
-        private EqualsValueClause ParseEqualsValueClause(bool isArray)
+        private EqualsValueClause ParseEqualsValueClause()
         {
             Eat(TokenType.ASSIGN);
-            ASTNode node;
-            if (isArray)
+            return _currentToken.Type switch
             {
-                node = ParseArrayIndexCall();
-            }
-            else
-            {
-                node = ParseExpression();
-            }
-            return new EqualsValueClause(node);
+                TokenType.L_BRACKET => new EqualsValueClause(ParseArrayIndexCall()),
+                _ => new EqualsValueClause(ParseExpression())
+            };
         }
 
         private ASTNode ParseVariableOrMethodDeclaration(VariableType variableType)
@@ -96,12 +117,12 @@ namespace ToyParser.Parser
         {
             var variableDeclarators = new List<VariableDeclarator>();
             //Process first declarator because we need picked first identifier to recognize if its method or variable declaration
-            var declarator = new VariableDeclarator(identifier, ParseEqualsValueClause(variableType.IsArray));
+            var declarator = new VariableDeclarator(identifier, ParseEqualsValueClause());
             variableDeclarators.Add(declarator);
 
             while (_currentToken.Type != TokenType.SEMICOLON)
             {
-                var variableDeclarator = ParseVariableDeclarator(variableType.IsArray);
+                var variableDeclarator = ParseVariableDeclarator();
                 variableDeclarators.Add(variableDeclarator);
 
                 if (_currentToken.Type == TokenType.COMMA)
@@ -137,14 +158,15 @@ namespace ToyParser.Parser
 
             do
             {
-                var statement = ParseStatement();
-                if (statement is ReturnStatement rStatement)
+                switch (_currentToken.Type)
                 {
-                    returnStatement = rStatement;
-                }
-                else
-                {
-                    statements.Add(statement);
+                    case TokenType.RETURN:
+                        returnStatement = ParseReturnStatement();
+                        break;
+
+                    default:
+                        statements.Add(ParseStatement());
+                        break;
                 }
             } while (returnStatement is null);
             Eat(TokenType.R_BRACE);
@@ -190,7 +212,7 @@ namespace ToyParser.Parser
                 TokenType.DIGIT => ParseNumericLiteral(),
                 TokenType.STRING_LITERAL => ParseStringLiteral(),
                 TokenType.L_PAREN => ParseInneBinaryExpression(),
-                TokenType.IDENTIFIER => ParseIdentifier(),
+                TokenType.IDENTIFIER => ParseIdentifierOrMethodCall(),
                 _ => throw new SyntaxErrorException($"Unexpected token {_currentToken}")
             };
         }
@@ -225,6 +247,51 @@ namespace ToyParser.Parser
             }
             Identifier identifier = ParseIdentifier();
             return new MethodParameter(variableType, identifier);
+        }
+
+        private ASTNode ParseIdentifierOrMethodCall()
+        {
+            Identifier identifier = ParseIdentifier();
+            return _currentToken.Type switch
+            {
+                TokenType.L_PAREN => ParseMethodCall(identifier),
+                TokenType.L_BRACKET => ParseArrayIndexIdentifier(identifier),
+                _ => identifier
+            };
+        }
+
+        private MethodCall ParseMethodCall(Identifier identifier)
+        {
+            Eat(TokenType.L_PAREN);
+            IEnumerable<MethodCallParameter> _methodCallParameters = ParseMethodParameters();
+            Eat(TokenType.R_PAREN);
+            return new MethodCall(identifier, _methodCallParameters);
+        }
+
+        private IEnumerable<MethodCallParameter> ParseMethodParameters()
+        {
+            List<MethodCallParameter> methodCallParameters = new List<MethodCallParameter>();
+            while (_currentToken.Type != TokenType.R_PAREN)
+            {
+                var parameter = ParseMethodCallParameter();
+                methodCallParameters.Add(parameter);
+
+                if (_currentToken.Type == TokenType.COMMA)
+                    Eat(TokenType.COMMA);
+            }
+            return methodCallParameters;
+        }
+
+        private MethodCallParameter ParseMethodCallParameter()
+        {
+            ASTNode node = ParsePrimary();
+            return new MethodCallParameter(node);
+        }
+
+        private ArrayIdentifier ParseArrayIndexIdentifier(Identifier identifier)
+        {
+            var index = ParseArrayIndexCall();
+            return new ArrayIdentifier(identifier, index);
         }
 
         private Identifier ParseIdentifier()
