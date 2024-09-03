@@ -34,6 +34,7 @@ namespace ToyParser.Lexer
         public static readonly Regex MinusRegex = new(@"^-", RegexOptions.Compiled);
         public static readonly Regex MultiplyRegex = new(@"^\*", RegexOptions.Compiled);
         public static readonly Regex DivideRegex = new(@"^/", RegexOptions.Compiled);
+        public static readonly Regex ModuloRegex = new(@"^%", RegexOptions.Compiled);
 
         public static readonly Regex LessThenRegex = new(@"^<", RegexOptions.Compiled);
         public static readonly Regex GreaterThenRegex = new(@"^>", RegexOptions.Compiled);

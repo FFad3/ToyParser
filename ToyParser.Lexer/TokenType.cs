@@ -30,6 +30,7 @@
         MINUS,
         MULTIPLY,
         DIVIDE,
+        MODULO,
 
         EQUALS,
         NOT_EQUALS,

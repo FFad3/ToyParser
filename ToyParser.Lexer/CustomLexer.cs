@@ -50,6 +50,7 @@ namespace ToyParser.Lexer
                 {RegexPaterns.MinusRegex, TokenType.MINUS },
                 {RegexPaterns.MultiplyRegex, TokenType.MULTIPLY },
                 {RegexPaterns.DivideRegex, TokenType.DIVIDE },
+                {RegexPaterns.ModuloRegex, TokenType.MODULO },
 
                 {RegexPaterns.LessThenRegex, TokenType.LESS_THAN },
                 {RegexPaterns.GreaterThenRegex, TokenType.GREATER_THAN },

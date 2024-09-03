@@ -408,6 +408,7 @@ namespace ToyParser.Parser
                 TokenType.NOT_EQUALS => 30,
                 TokenType.MULTIPLY => 4, // * and / have higher precedence
                 TokenType.DIVIDE => 4,
+                TokenType.MODULO => 4,
                 TokenType.PLUS => 3,     // + and - have lower precedence
                 TokenType.MINUS => 3,
                 TokenType.AND => 2,
