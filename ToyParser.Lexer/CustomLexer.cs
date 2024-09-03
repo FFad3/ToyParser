@@ -28,7 +28,7 @@ namespace ToyParser.Lexer
                 {RegexPaterns.BooleanTypeRegex, TokenType.BOOLEAN },
                 {RegexPaterns.IntTypeRegex, TokenType.INT },
                 {RegexPaterns.StringTypeRegex, TokenType.STRING },
-                
+
                 {RegexPaterns.BooleanTrueRegex, TokenType.TRUE },
                 {RegexPaterns.BooleanFalseRegex, TokenType.FALSE },
                 {RegexPaterns.IfKeywordRegex, TokenType.IF },
@@ -65,6 +65,9 @@ namespace ToyParser.Lexer
                 {RegexPaterns.R_BraceRegex, TokenType.R_BRACE },
                 {RegexPaterns.L_BracketRegex, TokenType.L_BRACKET },
                 {RegexPaterns.R_BracketRegex, TokenType.R_BRACKET },
+
+                {RegexPaterns.ANDRegex, TokenType.AND },
+                {RegexPaterns.ORRegex, TokenType.OR },
             };
         }
 

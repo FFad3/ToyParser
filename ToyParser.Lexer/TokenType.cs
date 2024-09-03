@@ -38,6 +38,9 @@
         LESS_THAN_OR_EQUALS,
         GREATER_THAN_OR_EQUALS,
 
+        AND,
+        OR,
+
         SEMICOLON,
         COMMA,
         DOT,

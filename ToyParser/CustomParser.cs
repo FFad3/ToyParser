@@ -71,8 +71,25 @@ namespace ToyParser.Parser
                 TokenType.BOOLEAN => ParseVariableOrMethodDeclaration(ParseBooleanType()),
                 TokenType.IDENTIFIER => ParseAssigmentOrMethodCall(),
                 TokenType.CLASS => ParseClassDeclaration(),
+                TokenType.IF => ParseConditionalExpression(),
                 _ => throw new SyntaxErrorException($"Unexpected token {_currentToken}")
             };
+        }
+
+        private ConditionalExpression ParseConditionalExpression()
+        {
+            Eat(TokenType.IF);
+            var condition = ParseExpression();
+            var trueBlock = ParseBlockStatement();
+            trueBlock.BlockName = "TrueBlock";
+            BlockStatement? falseBlock = null;
+            if (_currentToken.Type == TokenType.ELSE)
+            {
+                Eat(TokenType.ELSE);
+                falseBlock = ParseBlockStatement();
+                falseBlock.BlockName = "FalseBlock";
+            }
+            return new ConditionalExpression(condition, trueBlock, falseBlock);
         }
 
         private ASTNode ParseAssigmentOrMethodCall()
@@ -161,6 +178,11 @@ namespace ToyParser.Parser
             Eat(TokenType.R_PAREN);
 
             BlockStatement blockStatement = ParseBlockStatement();
+            blockStatement.BlockName = "MethodBlock";
+
+            if (blockStatement.ReturnStatement is null)
+                throw new SyntaxErrorException("Method declaration require return statement");
+
             return new MethodDeclaration(variableType, identifier, methodParameters, blockStatement);
         }
 
@@ -169,8 +191,7 @@ namespace ToyParser.Parser
             Eat(TokenType.L_BRACE);
             ReturnStatement returnStatement = null!;
             List<ASTNode> statements = new List<ASTNode>();
-
-            do
+            while (_currentToken.Type != TokenType.R_BRACE)
             {
                 switch (_currentToken.Type)
                 {
@@ -182,7 +203,7 @@ namespace ToyParser.Parser
                         statements.Add(ParseStatement());
                         break;
                 }
-            } while (returnStatement is null);
+            }
             Eat(TokenType.R_BRACE);
             return new BlockStatement(statements, returnStatement);
         }
@@ -227,6 +248,8 @@ namespace ToyParser.Parser
                 TokenType.STRING_LITERAL => ParseStringLiteral(),
                 TokenType.L_PAREN => ParseInneBinaryExpression(),
                 TokenType.IDENTIFIER => ParseIdentifierOrMethodCall(),
+                TokenType.TRUE => ParseTrueBolleanConstant(),
+                TokenType.FALSE => ParseFalseBolleanConstant(),
                 _ => throw new SyntaxErrorException($"Unexpected token {_currentToken}")
             };
         }
@@ -323,6 +346,17 @@ namespace ToyParser.Parser
             return new ArrayIndexCall(numericliteral);
         }
 
+        private BooleanConstant ParseTrueBolleanConstant() => ParseBooleanConstant(TokenType.TRUE);
+
+        private BooleanConstant ParseFalseBolleanConstant() => ParseBooleanConstant(TokenType.FALSE);
+
+        private BooleanConstant ParseBooleanConstant(TokenType tokenType)
+        {
+            var booleanConstant = new BooleanConstant(_currentToken.Value);
+            Eat(tokenType);
+            return booleanConstant;
+        }
+
         private VariableType ParseIntType() => ParseVariableType(TokenType.INT);
 
         private VariableType ParseStringType() => ParseVariableType(TokenType.STRING);
@@ -366,10 +400,18 @@ namespace ToyParser.Parser
         {
             return token.Type switch
             {
-                TokenType.MULTIPLY => 2, // * and / have higher precedence
-                TokenType.DIVIDE => 2,
-                TokenType.PLUS => 1,     // + and - have lower precedence
-                TokenType.MINUS => 1,
+                TokenType.GREATER_THAN => 30,
+                TokenType.LESS_THAN => 30,
+                TokenType.GREATER_THAN_OR_EQUALS => 30,
+                TokenType.LESS_THAN_OR_EQUALS => 30,
+                TokenType.EQUALS => 30,
+                TokenType.NOT_EQUALS => 30,
+                TokenType.MULTIPLY => 4, // * and / have higher precedence
+                TokenType.DIVIDE => 4,
+                TokenType.PLUS => 3,     // + and - have lower precedence
+                TokenType.MINUS => 3,
+                TokenType.AND => 2,
+                TokenType.OR => 1,
                 _ => 0                   // Other tokens have the lowest precedence
             };
         }

@@ -49,5 +49,8 @@ namespace ToyParser.Lexer
         public static readonly Regex R_BraceRegex = new(@"^}", RegexOptions.Compiled);
         public static readonly Regex L_BracketRegex = new(@"^\[", RegexOptions.Compiled);
         public static readonly Regex R_BracketRegex = new(@"^\]", RegexOptions.Compiled);
+
+        public static readonly Regex ANDRegex = new(@"^&&", RegexOptions.Compiled);
+        public static readonly Regex ORRegex = new(@"^\||", RegexOptions.Compiled);
     }
 }

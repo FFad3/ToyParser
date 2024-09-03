@@ -4,7 +4,7 @@ namespace ToyParser.Parser.ASTnodes
 {
     public abstract class ASTNode
     {
-        public string Name => this.GetType().Name;
+        public virtual string Name => this.GetType().Name;
 
         public abstract string GetValue();
 
