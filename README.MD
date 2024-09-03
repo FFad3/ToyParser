@@ -1,5 +1,6 @@
 # ToyParserProject
 
-## Written simple custom parser from scratch in C# that generate AST
+## Simple custom parser that generate AST written in C#
+support subset of C# keywords and operations
 
-![Project sample](assets/images/logo.png)
+![Project sample](./Screenshot.png)
