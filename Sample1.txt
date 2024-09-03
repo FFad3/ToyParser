@@ -1,1 +1,31 @@
-1 * 2 + 3 * 4
+class TestClass
+{
+	int Add(int a,int b)
+	{
+		return a + b;
+	}
+
+	int Square(int a)
+	{
+		return a*a;
+	}
+
+	int SumSquare(int a ,int b)
+	{
+		int sum = Add(a,b);
+		return Square(sum);
+	}
+
+	bool IsOdd(int a)
+	{
+		if(a % 2 == 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		return false;
+	}
+}
